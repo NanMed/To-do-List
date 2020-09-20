@@ -33,12 +33,12 @@ function addTask(task) {
   let html =
   `
   <div id = "card${task.id}" class="card my-3">
-    <div class="card-body">
+    <div class="card-body" id="card">
       <p id = "task${task.id} class="card-text">${task.description}</p>
-      <form>
+      <form id="done-link">
         <a id="doneTask${task.id}" href="javascript:markDone(${task.id});" onclick="doneTask(${task.id});" class="card-link">Done</a>
       </form>
-      <form>
+      <form id="delete-link">
         <a id="delete${task.id}" href="javascript:"deleteTaskView(${task.id});";" onclick="deleteTask(${task.id});" class="card-link">Delete</a>
       </form>
     </div>
@@ -62,7 +62,7 @@ function doneTask(id) {
   fetch('/update/'+id, payload)
     .then(response => {
       if (response.ok) {
-        return response.json();
+        return response.text();
       } else {
         throw "Error en la llamada Ajax";
       }
@@ -76,9 +76,19 @@ function doneTask(id) {
 }
 
 function markDone(id){
-  console.log('donde task');
+  console.log('done task');
+  // let doneEl = document.getElementById('doneTask'+id)
+  // doneEl.classList.add('text-success')
+
+  let cardBody = document.getElementById('card')
+  let doneLink = document.getElementById('done-link')
+  let deleteLink = document.getElementById('delete-link')
   let doneEl = document.getElementById('doneTask'+id)
-  doneEl.classList.add('text-success')
+  let delEl = document.getElementById('delete'+id)
+  doneLink.removeChild(doneEl);
+  deleteLink.removeChild(delEl);
+  cardBody.removeChild(cardBody.lastElementChild)
+  cardBody.removeChild(cardBody.lastElementChild)
 }
 
 function deleteTask(id) {
@@ -95,7 +105,7 @@ function deleteTask(id) {
   fetch('/delete/'+id, payload)
     .then(response => {
       if (response.ok) {
-        return response.json();
+        return response.text();
       } else {
         throw "Error en la llamada Ajax";
       }
@@ -109,7 +119,6 @@ function deleteTask(id) {
 }
 
 function deleteTaskView(id){
-  let delEl = document.getElementById('delete'+id)
   let task = document.getElementById('card'+id)
-  delEl.parentNode.removeChild(task)
+  task.parentNode.removeChild(task)
 }
