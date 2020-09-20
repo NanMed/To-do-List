@@ -16,7 +16,11 @@ exports.store = (req, res) => {
 exports.changeStatus = (req, res) => {
   Task.changeStatus(req.body.id).then((id) => {
     console.log('Task status changed');
-    res.redirect('/');
+    if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+      Task.find(id).then((task) => res.json(task));
+    } else {
+      res.redirect('/');
+    }
   });
 } 
 
@@ -29,7 +33,10 @@ exports.showAll = (req, res) => {
 
 exports.deleteTask = (req, res) => {
   Task.delete(req.body.id).then((id) => {
-    console.log('Task deleted');
-    res.redirect('/');
+    if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+      Task.find(id).then((task) => res.json(task));
+    } else {
+      res.redirect('/');
+    }
   });
 } 
