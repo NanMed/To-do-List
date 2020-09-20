@@ -36,10 +36,10 @@ function addTask(task) {
     <div class="card-body" id="card">
       <p id = "task${task.id} class="card-text">${task.description}</p>
       <form id="done-link">
-        <a id="doneTask${task.id}" href="javascript:markDone(${task.id});" onclick="doneTask(${task.id});" class="card-link">Done</a>
+        <a id="doneTask${task.id}" href="javascript:;" onclick="doneTask(${task.id});" class="card-link">Done</a>
       </form>
       <form id="delete-link">
-        <a id="delete${task.id}" href="javascript:"deleteTaskView(${task.id});";" onclick="deleteTask(${task.id});" class="card-link">Delete</a>
+        <a id="delete${task.id}" href="javascript:;" onclick="deleteTask(${task.id});" class="card-link">Delete</a>
       </form>
     </div>
   </div>
